@@ -46,7 +46,7 @@ class _AddInfoShopState extends State<AddInfoShop> {
           color: Colors.white,
         ),
         label: Text(
-          'Save Shop Information',
+          'Save Shop Information 20200609',
           style: TextStyle(color: Colors.white),
         ),
       ),
