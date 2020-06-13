@@ -89,7 +89,7 @@ class _MainShopState extends State<MainShop> {
 
   ListTile informationMenu() => ListTile(
         leading: Icon(Icons.info),
-        title: Text('ข้อมูลของร้าน'),
+        title: Text('ข้อมูลของร้าน111'),
         subtitle: Text('ข้อมูลของร้าน พร้อม Edit'),
         onTap: () {
           setState(

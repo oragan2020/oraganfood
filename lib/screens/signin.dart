@@ -5,6 +5,7 @@ import 'package:oraganfood/model/user_model.dart';
 import 'package:oraganfood/screens/main_rider.dart';
 import 'package:oraganfood/screens/main_shop.dart';
 import 'package:oraganfood/screens/main_user.dart';
+import 'package:oraganfood/utility/my_constant.dart';
 import 'package:oraganfood/utility/my_style.dart';
 import 'package:oraganfood/utility/normal_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,7 +78,7 @@ class _SignInState extends State<SignIn> {
 
   Future<Null> checkAuthen() async {
     String url =
-        'http://192.168.1.7/oraganfood/getUserWhereUserMaster.php?isAdd=true&User=$user';
+        '${MyConstant().domain}/oraganfood/getUserWhereUserMaster.php?isAdd=true&User=$user';
     try {
       Response response = await Dio().get(url);
       print('res = $response');

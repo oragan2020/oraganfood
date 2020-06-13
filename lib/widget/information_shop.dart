@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:oraganfood/model/user_model.dart';
 import 'package:oraganfood/screens/add_info_shop.dart';
+import 'package:oraganfood/utility/my_constant.dart';
 import 'package:oraganfood/utility/my_style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InformationShop extends StatefulWidget {
   @override
@@ -8,6 +14,34 @@ class InformationShop extends StatefulWidget {
 }
 
 class _InformationShopState extends State<InformationShop> {
+  UserModel userModel;
+  @override
+  void initState() {
+    // todo: implement initState
+    super.initState();
+    readDataUser();
+  }
+
+  Future<Null> readDataUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id');
+
+    String url =
+        '${MyConstant().domain}/oraganfood/getUserWhereId.php?isAdd=true&id=$id';
+    await Dio().get(url).then((value) {
+      //print('value = $value');
+      var result = json.decode(value.data);
+      // แปลงการเข้ารหัสภาษาไทยออกมาก่อน ของเราไม่เข้ารหัสก็แสดงไทยแล้ว
+      // print('result = $result');
+      for (var map in result) {
+        setState(() {
+          userModel = UserModel.fromJson(map);
+        });
+        print('nameShop = ${(userModel.nameShop)}');
+      }
+    });
+  }
+
   void routeToAddInfo() {
     print('routeToAddInfo Work!');
     MaterialPageRoute materialPageRoute = MaterialPageRoute(
@@ -21,10 +55,18 @@ class _InformationShopState extends State<InformationShop> {
     return Stack(
       // วัตถุจะสามารถซ่อนทันกันได้
       children: <Widget>[
-        MyStyle().titleCenter('ยังไม่มีข้อมูล กรุณาเพิ่มข้อมูล', context),
+        userModel == null
+            ? MyStyle().showProgress()
+            : userModel.nameShop.isEmpty
+                ? showNoData(context)
+                : Text('Have Data'),
         addAndEditButton(),
       ],
     );
+  }
+
+  Widget showNoData(BuildContext context) {
+    return MyStyle().titleCenter('กรุณาเพิ่มข้อมูล', context);
   }
 
   Row addAndEditButton() {

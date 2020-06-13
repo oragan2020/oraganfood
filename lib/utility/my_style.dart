@@ -4,6 +4,12 @@ class MyStyle {
   Color darkColor = Colors.blue.shade900;
   Color primaryColor = Colors.green;
 
+  Widget showProgress() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
   TextStyle mainTitle = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.bold,
@@ -24,7 +30,8 @@ class MyStyle {
   Widget titleCenter(String string, BuildContext context) {
     //เมื่อใดก็ตามที่ method นี้ถูกเรียกจะรับค่า String มา 1 ตัว และนำมาแสดงที่ตรงกลาง
     return Center(
-      child: Container(width: MediaQuery.of(context).size.width*0.5,//50% ของจอ
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.5, //50% ของจอ
         child: Text(
           string,
           style: TextStyle(
