@@ -57,15 +57,38 @@ class _InformationShopState extends State<InformationShop> {
       children: <Widget>[
         userModel == null
             ? MyStyle().showProgress()
-            : userModel.nameShop.isEmpty
-                ? showNoData(context)
-                : showContent(),
+            : userModel.nameShop.isEmpty ? showNoData(context) : showContent(),
         addAndEditButton(),
       ],
     );
   }
 
-  Text showContent() => Text(userModel.nameShop);
+  Widget showContent() => Column(
+        children: <Widget>[
+          Text(
+            userModel.nameShop,
+            style: TextStyle(
+              fontSize: 24.0,
+              color: Colors.orange[700],
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 300.0,
+                width: 300.0,
+                child: Image.network(
+                  '${MyConstant().domain}${userModel.urlPicture}',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+          Text('ที่อยู่ ${userModel.address}')
+        ],
+      );
 
   Widget showNoData(BuildContext context) {
     return MyStyle().titleCenter('กรุณาเพิ่มข้อมูล', context);
